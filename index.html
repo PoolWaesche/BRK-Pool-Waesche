@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Pool-Wäsche – BRK Bereitschaft Schwarzenfeld</title>
+
+    <style>
+        .kleidungsname {
+            font-size: 1.25em;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        button {
+            margin-top: 30px;
+            padding: 10px 18px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Pool-Wäsche</h1>
+
+    <h2>BRK Bereitschaft Schwarzenfeld</h2>
+
+    <h3>Kleidung entnehmen</h3>
+
+
+    <!-- NAME -->
+
+    <label for="name">Vor- und Nachname</label>
+    <br>
+
+    <input
+        type="text"
+        id="name"
+        placeholder="Vor- und Nachname"
+    >
+
+
+    <br><br>
+
+
+    <!-- GRUND -->
+
+    <label for="grund">Grund der Entnahme</label>
+    <br>
+
+    <select id="grund">
+
+        <option value="">Bitte auswählen</option>
+
+        <option value="Sanitätsdienst">
+            Sanitätsdienst
+        </option>
+
+        <option value="Einsatz">
+            Einsatz
+        </option>
+
+        <option value="Übung">
+            Übung
+        </option>
+
+        <option value="Sonstiges">
+            Sonstiges
+        </option>
+
+    </select>
+
+
+    <br><br>
+
+
+    <h3>Kleidungsstücke</h3>
+
+
+    <!-- POLOHEMD -->
+
+    <div class="kleidungsname">
+        Polohemd
+    </div>
+
+    <label for="polo-groesse">
+        Größe
+    </label>
+
+    <br>
+
+    <select id="polo-groesse">
+
+        <option value="">
+            Bitte auswählen
+        </option>
+
+        <option value="XS">XS</option>
+        <option value="S">S</option>
+        <option value="M">M</option>
+        <option value="L">L</option>
+        <option value="2XL">2XL</option>
+        <option value="3XL">3XL</option>
+
+    </select>
+
+    <br><br>
+
+    <label for="polo-menge">
+        Menge
+    </label>
+
+    <br>
+
+    <input
+        type="number"
+        id="polo-menge"
+        min="0"
+        value="0"
+    >
+
+
+    <br><br><br>
+
+
+    <!-- EINSATZHOSE GRAU -->
+
+    <div class="kleidungsname">
+        Einsatzhose grau
+    </div>
+
+    <label for="hose-grau-groesse">
+        Größe
+    </label>
+
+    <br>
+
+    <select id="hose-grau-groesse">
+
+        <option value="">
+            Bitte auswählen
+        </option>
+
+        <option value="38">38</option>
+        <option value="40">40</option>
+        <option value="42">42</option>
+        <option value="44">44</option>
+        <option value="46">46</option>
+        <option value="48">48</option>
+        <option value="50">50</option>
+        <option value="52">52</option>
+        <option value="54">54</option>
+        <option value="56">56</option>
+        <option value="58">58</option>
+        <option value="60">60</option>
+        <option value="62">62</option>
+        <option value="64">64</option>
+        <option value="66">66</option>
+        <option value="98">98</option>
+
+    </select>
+
+    <br><br>
+
+    <label for="hose-grau-menge">
+        Menge
+    </label>
+
+    <br>
+
+    <input
+        type="number"
+        id="hose-grau-menge"
+        min="0"
+        value="0"
+    >
+
+
+    <br><br><br>
+
+
+    <!-- EINSATZHOSE ORANGE -->
+
+    <div class="kleidungsname">
+        Einsatzhose orange
+    </div>
+
+    <label for="hose-orange-groesse">
+        Größe
+    </label>
+
+    <br>
+
+    <select id="hose-orange-groesse">
+
+        <option value="">
+            Bitte auswählen
+        </option>
+
+        <option value="28">28</option>
+        <option value="42">42</option>
+        <option value="44">44</option>
+        <option value="46">46</option>
+        <option value="48">48</option>
+        <option value="50">50</option>
+        <option value="52">52</option>
+        <option value="54">54</option>
+        <option value="56">56</option>
+        <option value="58">58</option>
+        <option value="60">60</option>
+
+    </select>
+
+    <br><br>
+
+    <label for="hose-orange-menge">
+        Menge
+    </label>
+
+    <br>
+
+    <input
+        type="number"
+        id="hose-orange-menge"
+        min="0"
+        value="0"
+    >
+
+
+    <br><br><br>
+
+
+    <!-- PULLOVER -->
+
+    <div class="kleidungsname">
+        Pullover
+    </div>
+
+    <label for="pullover-groesse">
+        Größe
+    </label>
+
+    <br>
+
+    <select id="pullover-groesse">
+
+        <option value="">
+            Bitte auswählen
+        </option>
+
+        <option value="XS">XS</option>
+        <option value="S">S</option>
+        <option value="M">M</option>
+        <option value="L">L</option>
+        <option value="2XL">2XL</option>
+        <option value="3XL">3XL</option>
+
+    </select>
+
+    <br><br>
+
+    <label for="pullover-menge">
+        Menge
+    </label>
+
+    <br>
+
+    <input
+        type="number"
+        id="pullover-menge"
+        min="0"
+        value="0"
+    >
+
+
+    <br><br><br>
+
+
+    <!-- JACKE -->
+
+    <div class="kleidungsname">
+        Jacke
+    </div>
+
+    <label for="jacke-groesse">
+        Größe
+    </label>
+
+    <br>
+
+    <select id="jacke-groesse">
+
+        <option value="">
+            Bitte auswählen
+        </option>
+
+        <option value="38/40">38/40</option>
+        <option value="42/44">42/44</option>
+        <option value="46/48">46/48</option>
+        <option value="50/52">50/52</option>
+        <option value="54/56">54/56</option>
+        <option value="58/60">58/60</option>
+
+    </select>
+
+    <br><br>
+
+    <label for="jacke-menge">
+        Menge
+    </label>
+
+    <br>
+
+    <input
+        type="number"
+        id="jacke-menge"
+        min="0"
+        value="0"
+    >
+
+
+    <br><br>
+
+
+    <!-- BESTÄTIGUNG -->
+
+    <button
+        type="button"
+        onclick="entnahmePruefen()"
+    >
+        Entnahme bestätigen
+    </button>
+
+
+    <!-- JAVASCRIPT -->
+
+    <script>
+
+        function entnahmePruefen() {
+
+            const name =
+                document.getElementById("name").value.trim();
+
+            const grund =
+                document.getElementById("grund").value;
+
+
+            /*
+             * Zuerst prüfen wir,
+             * ob Name und Grund ausgefüllt wurden.
+             */
+
+            if (name === "") {
+
+                alert(
+                    "Bitte Vor- und Nachnamen eingeben."
+                );
+
+                return;
+            }
+
+
+            if (grund === "") {
+
+                alert(
+                    "Bitte den Grund der Entnahme auswählen."
+                );
+
+                return;
+            }
+
+
+            /*
+             * Hier sammeln wir alle fünf Kleidungsstücke.
+             */
+
+            const kleidungsstuecke = [
+
+                {
+                    name: "Polohemd",
+
+                    groesse:
+                        document.getElementById(
+                            "polo-groesse"
+                        ).value,
+
+                    menge:
+                        Number(
+                            document.getElementById(
+                                "polo-menge"
+                            ).value
+                        )
+                },
+
+
+                {
+                    name: "Einsatzhose grau",
+
+                    groesse:
+                        document.getElementById(
+                            "hose-grau-groesse"
+                        ).value,
+
+                    menge:
+                        Number(
+                            document.getElementById(
+                                "hose-grau-menge"
+                            ).value
+                        )
+                },
+
+
+                {
+                    name: "Einsatzhose orange",
+
+                    groesse:
+                        document.getElementById(
+                            "hose-orange-groesse"
+                        ).value,
+
+                    menge:
+                        Number(
+                            document.getElementById(
+                                "hose-orange-menge"
+                            ).value
+                        )
+                },
+
+
+                {
+                    name: "Pullover",
+
+                    groesse:
+                        document.getElementById(
+                            "pullover-groesse"
+                        ).value,
+
+                    menge:
+                        Number(
+                            document.getElementById(
+                                "pullover-menge"
+                            ).value
+                        )
+                },
+
+
+                {
+                    name: "Jacke",
+
+                    groesse:
+                        document.getElementById(
+                            "jacke-groesse"
+                        ).value,
+
+                    menge:
+                        Number(
+                            document.getElementById(
+                                "jacke-menge"
+                            ).value
+                        )
+                }
+
+            ];
+
+
+            /*
+             * Mindestens EIN Kleidungsstück
+             * muss eine Größe UND eine Menge
+             * von mindestens 1 besitzen.
+             */
+
+            const gueltigeEntnahme =
+                kleidungsstuecke.some(
+                    kleidung =>
+                        kleidung.groesse !== "" &&
+                        kleidung.menge >= 1
+                );
+
+
+            if (!gueltigeEntnahme) {
+
+                alert(
+                    "Bitte mindestens ein Kleidungsstück mit Größe und Menge auswählen."
+                );
+
+                return;
+            }
+
+
+            /*
+             * Wenn wir bis hier kommen,
+             * sind die Grundvoraussetzungen erfüllt.
+             */
+
+            alert(
+                "Die Entnahme wurde erfolgreich geprüft."
+            );
+
+        }
+
+    </script>
+
+</body>
+
+</html>
