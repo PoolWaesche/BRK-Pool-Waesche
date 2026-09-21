@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Pool-Wäsche – Admin</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+    color: #222;
+}
+
+h1 {
+    margin-bottom: 5px;
+}
+
+h2 {
+    margin-top: 0;
+    font-size: 18px;
+    font-weight: normal;
+}
+
+h3 {
+    margin-top: 30px;
+}
+
+#login-bereich,
+#admin-inhalt {
+    background-color: white;
+    max-width: 700px;
+    padding: 25px;
+    margin-top: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.10);
+}
+
+input {
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #cccccc;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+button {
+    margin-top: 12px;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    background-color: #cc0000;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #a80000;
+}
+
+#admin-inhalt div {
+    line-height: 1.6;
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid #dddddd;
+    margin: 20px 0;
+}
+    .entnahme-karte {
+    background-color: #f8f8f8;
+    border: 1px solid #dddddd;
+    border-radius: 10px;
+    padding: 18px;
+    margin-top: 18px;
+}
+
+.entnahme-kopf {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.entnahme-kopf strong {
+    font-size: 20px;
+}
+
+.entnahme-kopf span {
+    background-color: #eeeeee;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.kleidung-liste {
+    margin-bottom: 15px;
+}
+
+.kleidungsstueck {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 8px 0;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.kleidungsstueck:last-child {
+    border-bottom: none;
+}
+
+.kleidungsstueck span {
+    white-space: nowrap;
+}
+
+.entnahme-zeit {
+    font-size: 13px;
+    color: #666666;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 12px;
+    }
+
+    #login-bereich,
+    #admin-inhalt {
+        padding: 18px;
+    }
+
+    .entnahme-kopf,
+    .kleidungsstueck {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+
+    .entnahme-karte button {
+        width: 100%;
+    }
+}
+    </style>
+</head>
+
+<body>
+
+    <h1>Pool-Wäsche</h1>
+    <h2>BRK Bereitschaft Schwarzenfeld</h2>
+
+    <h3>Adminbereich</h3>
+    <div id="login-bereich">
+    <h4>Anmelden</h4>
+
+    <label for="email">E-Mail-Adresse</label><br>
+    <input type="email" id="email"><br><br>
+
+    <label for="passwort">Passwort</label><br>
+    <input type="password" id="password"><br><br>
+
+    <button type="button" id="login-button">Anmelden</button>
+</div>
+<div id="admin-inhalt" style="display: none;">
+    Offene Entnahmen
+</div>
+
+<button type="button" id="logout-button" style="display: none;">Abmelden</button>
+<script>
+            const SUPABASE_URL = "https://rizoghsnjvugnhxrptko.supabase.co";
+        const SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJpem9naHNuanZ1Z25oeHJwdGtvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk4NDEzOTAsImV4cCI6MjEwNTQxNzM5MH0.G8kbKnfJ6zwTXmCd2YcjtRBXdY9CnR2C9tbVKQRBrVg";
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+async function bestehendeAnmeldungPruefen() {
+    const { data: { session } } = await supabaseClient.auth.getSession();
+
+    if (session) {
+        document.getElementById("login-bereich").style.display = "none";
+        document.getElementById("admin-inhalt").style.display = "block";
+        document.getElementById("logout-button").style.display = "block";
+        await entnahmenLaden();
+    }
+}
+
+bestehendeAnmeldungPruefen();
+document.getElementById("login-button").addEventListener("click", async function () {
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+    const { error } = await supabaseClient.auth.signInWithPassword({
+            email: email,
+            password: password
+            });
+            if (error) {
+                alert("Anmeldung fehlgeschlagen. Bitte E-Mail-Adresse und Passwort prüfen.");
+                return;
+                }
+                alert("Anmeldung erfolgreich.");
+                document.getElementById("login-bereich").style.display = "none";
+                document.getElementById("admin-inhalt").style.display = "block";
+                document.getElementById("logout-button").style.display = "block";
+                await entnahmenLaden();
+                });
+                document.getElementById("logout-button").addEventListener("click", async function () {
+    await supabaseClient.auth.signOut();
+
+    document.getElementById("login-bereich").style.display = "block";
+    document.getElementById("admin-inhalt").style.display = "none";
+    document.getElementById("logout-button").style.display = "none";
+
+    document.getElementById("email").value = "";
+    document.getElementById("password").value = "";
+
+    alert("Erfolgreich abgemeldet.");
+});
+                async function entnahmenLaden() {
+                    const { data, error } = await supabaseClient
+                        .from("entnahmen")
+                            .select("*")
+                                .order("created_at", { ascending: false });
+                                if (error) {
+                                    alert("Fehler beim Laden der Entnahmen.");
+                                    return;
+                                    }
+                                    const adminInhalt = document.getElementById("admin-inhalt");
+                                    adminInhalt.innerHTML = `<h4>Offene Entnahmen <span style="font-size: 14px; font-weight: normal; color: #666;">· ${data.length}</span></h4>`;
+                                    if (data.length === 0) {
+                                        adminInhalt.innerHTML += "<p>Keine offenen Entnahmen vorhanden.</p>";
+                                        }
+                                        data.forEach(entnahme => {
+    const eintrag = document.createElement("div");
+    eintrag.className = "entnahme-karte";
+
+    const kleidungText = entnahme.items.map(item => {
+        return `<div class="kleidungsstueck">
+            <strong>${item.menge}× ${item.name}</strong>
+            <span>Größe ${item.groesse}</span>
+        </div>`;
+    }).join("");
+
+    const zeitpunkt = new Date(entnahme.created_at).toLocaleString("de-DE");
+
+    eintrag.innerHTML = `
+        <div class="entnahme-kopf">
+            <strong>${entnahme.name}</strong>
+            <span>${entnahme.grund}</span>
+        </div>
+
+        <div class="kleidung-liste">
+            ${kleidungText}
+        </div>
+
+        <div class="entnahme-zeit">
+            Entnommen am: ${zeitpunkt}
+        </div>
+    `;
+
+    const zurueckButton = document.createElement("button");
+    zurueckButton.textContent = "Als zurückgegeben markieren";
+    zurueckButton.type = "button";
+
+    zurueckButton.addEventListener("click", async function () {
+        const bestaetigt = confirm("Wurde die Kleidung vollständig zurückgegeben?");
+
+        if (!bestaetigt) {
+            return;
+        }
+
+        const { error } = await supabaseClient
+            .from("entnahmen")
+            .delete()
+            .eq("id", entnahme.id);
+
+        if (error) {
+            alert("Fehler beim Löschen der Entnahme.");
+            return;
+        }
+
+        alert("Rückgabe erfolgreich.");
+        await entnahmenLaden();
+    });
+
+    eintrag.appendChild(zurueckButton);
+    adminInhalt.appendChild(eintrag);
+});
+                                                }
+</script>
+
+</body>
+</html>
