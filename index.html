@@ -22,6 +22,7 @@
             cursor: pointer;
         }
     </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
 <body>
@@ -335,8 +336,10 @@
     <!-- JAVASCRIPT -->
 
     <script>
-
-        function entnahmePruefen() {
+        const SUPABASE_URL = "https://rizoghsnjvugnhxrptko.supabase.co";
+        const SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJpem9naHNuanZ1Z25oeHJwdGtvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk4NDEzOTAsImV4cCI6MjEwNTQxNzM5MH0.G8kbKnfJ6zwTXmCd2YcjtRBXdY9CnR2C9tbVKQRBrVg";
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+        async function entnahmePruefen() {
 
             const name =
                 document.getElementById("name").value.trim();
@@ -492,9 +495,38 @@
              * sind die Grundvoraussetzungen erfüllt.
              */
 
-            alert(
-                "Die Entnahme wurde erfolgreich geprüft."
-            );
+            const ausgewaehlteKleidung = kleidungsstuecke.filter(
+    kleidung => kleidung.groesse !== "" && kleidung.menge >= 1
+);
+
+const { error } = await supabaseClient
+    .from("entnahmen")
+    .insert({
+        name: name,
+        grund: grund,
+        items: ausgewaehlteKleidung
+    });
+
+if (error) {
+    alert("Fehler beim Speichern der Entnahme.");
+    console.error(error);
+    return;
+}
+
+alert("Entnahme erfolgreich gespeichert.");
+document.getElementById("name").value = "";
+document.getElementById("grund").value = "";
+kleidungsstuecke.forEach(kleidung => {
+    kleidung.groesse = "";
+    kleidung.menge = 0;
+});
+document.querySelectorAll('select[id$="-groesse"]').forEach(feld => {
+    feld.value = "";
+});
+
+document.querySelectorAll('input[id$="-menge"]').forEach(feld => {
+    feld.value = 0;
+});
 
         }
 
